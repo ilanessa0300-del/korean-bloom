@@ -2,95 +2,93 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Korean Learning App - Strict 3-color design system */
+/* Colors: White #FFFFFF, Black #000000, Purple #7C3AED */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Core palette - only 3 colors */
+    --white: 0 0% 100%;
+    --black: 0 0% 0%;
+    --purple: 263 84% 58%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    /* Semantic tokens mapped to our 3 colors */
+    --background: var(--white);
+    --foreground: var(--black);
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --card: var(--white);
+    --card-foreground: var(--black);
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --popover: var(--white);
+    --popover-foreground: var(--black);
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --primary: var(--purple);
+    --primary-foreground: var(--white);
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --secondary: var(--white);
+    --secondary-foreground: var(--black);
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --muted: var(--white);
+    --muted-foreground: var(--black);
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --accent: var(--purple);
+    --accent-foreground: var(--white);
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --destructive: var(--black);
+    --destructive-foreground: var(--white);
 
-    --radius: 0.5rem;
+    --border: var(--purple);
+    --input: var(--purple);
+    --ring: var(--purple);
 
-    --sidebar-background: 0 0% 98%;
+    --radius: 1.125rem;
 
-    --sidebar-foreground: 240 5.3% 26.1%;
+    /* Component-specific tokens */
+    --card-border: var(--purple);
+    --button-primary-bg: var(--purple);
+    --button-primary-text: var(--white);
+    --button-secondary-bg: var(--white);
+    --button-secondary-text: var(--black);
+    --button-outline-border: var(--purple);
+    
+    --nav-bg: var(--white);
+    --nav-border: var(--purple);
+    --nav-active: var(--purple);
+    --nav-inactive: var(--black);
 
-    --sidebar-primary: 240 5.9% 10%;
+    --progress-bg: var(--white);
+    --progress-fill: var(--purple);
+    --progress-border: var(--black);
 
-    --sidebar-primary-foreground: 0 0% 98%;
+    --circle-locked: var(--white);
+    --circle-locked-border: var(--purple);
+    --circle-completed: var(--purple);
+    --circle-completed-text: var(--white);
 
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Safe area for mobile */
+    --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --background: var(--black);
+    --foreground: var(--white);
+    --card: var(--black);
+    --card-foreground: var(--white);
+    --popover: var(--black);
+    --popover-foreground: var(--white);
+    --primary: var(--purple);
+    --primary-foreground: var(--white);
+    --secondary: var(--black);
+    --secondary-foreground: var(--white);
+    --muted: var(--black);
+    --muted-foreground: var(--white);
+    --accent: var(--purple);
+    --accent-foreground: var(--white);
+    --border: var(--purple);
+    --input: var(--purple);
+    --ring: var(--purple);
   }
 }
 
@@ -99,7 +97,126 @@ All colors MUST be HSL.
     @apply border-border;
   }
 
+  html {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
   body {
+    @apply bg-background text-foreground font-sans;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  /* Focus styles - purple outline */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-background;
+  }
+}
+
+@layer components {
+  /* Card with purple border */
+  .korean-card {
+    @apply bg-card rounded-[var(--radius)] border-2 border-primary p-4;
+  }
+
+  /* Primary button */
+  .korean-btn-primary {
+    @apply bg-primary text-primary-foreground font-semibold rounded-[var(--radius)] px-6 py-3 
+           transition-all duration-200 hover:opacity-90 active:scale-[0.98];
+  }
+
+  /* Outline button */
+  .korean-btn-outline {
+    @apply bg-background text-foreground font-semibold rounded-[var(--radius)] px-6 py-3 
+           border-2 border-primary transition-all duration-200 hover:bg-primary hover:text-primary-foreground;
+  }
+
+  /* Navigation tab */
+  .nav-tab {
+    @apply flex flex-col items-center justify-center gap-1 py-2 px-3 text-xs font-medium
+           transition-colors duration-200;
+  }
+
+  .nav-tab-active {
+    @apply text-primary;
+  }
+
+  .nav-tab-inactive {
+    @apply text-foreground;
+  }
+
+  /* Lesson circle */
+  .lesson-circle {
+    @apply w-14 h-14 rounded-full flex items-center justify-center font-bold text-lg
+           border-2 border-primary transition-all duration-200;
+  }
+
+  .lesson-circle-locked {
     @apply bg-background text-foreground;
+  }
+
+  .lesson-circle-unlocked {
+    @apply bg-background text-foreground hover:bg-primary hover:text-primary-foreground cursor-pointer;
+  }
+
+  .lesson-circle-completed {
+    @apply bg-primary text-primary-foreground;
+  }
+
+  /* Flip card */
+  .flip-card {
+    perspective: 1000px;
+  }
+
+  .flip-card-inner {
+    @apply relative w-full h-full transition-transform duration-500;
+    transform-style: preserve-3d;
+  }
+
+  .flip-card-inner.flipped {
+    transform: rotateY(180deg);
+  }
+
+  .flip-card-front,
+  .flip-card-back {
+    @apply absolute w-full h-full backface-hidden rounded-[var(--radius)] border-2 border-primary bg-background;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+
+  .flip-card-back {
+    transform: rotateY(180deg);
+  }
+
+  /* Progress bar */
+  .progress-bar {
+    @apply h-2 rounded-full bg-background border border-foreground overflow-hidden;
+  }
+
+  .progress-bar-fill {
+    @apply h-full bg-primary transition-all duration-300;
+  }
+
+  /* Video player container */
+  .video-container {
+    @apply rounded-[1.5rem] border-4 border-primary overflow-hidden;
+  }
+
+  /* Canvas for writing practice */
+  .writing-canvas {
+    @apply border-2 border-primary rounded-[var(--radius)] bg-background touch-none;
+  }
+
+  /* Mobile safe area padding */
+  .safe-bottom {
+    padding-bottom: calc(80px + var(--safe-area-inset-bottom));
+  }
+}
+
+@layer utilities {
+  .backface-hidden {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
   }
 }
