@@ -1,73 +1,102 @@
-# Welcome to your Lovable project
+# Korean Bloom
 
-## Project info
+Создай веб/мобайл-ориентированное приложение (PWA) для изучения корейского языка в стиле «всё связано с Копипарой» (милый визуальный тон, но без использования чужих логотипов/брендов). Дизайн строго в 3 цветах: белый #FFFFFF, чёрный #000000, фиолетовый #7C3AED (используй как основной акцент, рамки и кнопки). Никаких других цветов, градиентов и лишних оттенков. Типографика: современный гротеск, чёткая читабельность; иконки монохромные (чёрные/фиолетовые). Скругления: видео и карточки с овальными/закруглёнными углами (например 18–24px). 
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+Языки интерфейса: Русский и Казахский. Переключатель языка в правом верхнем углу (RU/KZ). Все текстовые строки вынеси в i18n-словарь, по умолчанию RU.
 
-## How can I edit this code?
+Навигация: нижняя панель (tab bar) с 5 разделами: «Главное», «Уроки», «Календарь», «Награды», «Справка». Все экраны адаптивные для телефона.
 
-There are several ways of editing your application.
+Данные/модели (можно хранить в localStorage/IndexedDB для MVP; если есть БД — таблицы):
+- UserStats: lessonsCompleted, streakDays, points, totalStudyMinutes, recentActivity[]
+- Lesson: id, category (hangul|grammar|words|writing), title, level, module, order, videoUrl, isLocked, testScorePercent (0|50|100)
+- WordCardSet: id, title (приветствия/числа/семья/еда/цветы/цвета/глаголы), cards[] (front, back, transcription)
+- CalendarEntry: date, lessonsCount, minutes, points, note (например «уроков не было»)
+- Achievement: id, title, description, isUnlocked, progressValue, goalValue
 
-**Use Lovable**
+Экран 1: «Главное»
+Покажи карточками/виджетами:
+- Сколько уроков пройдено
+- Сколько дней подряд (streak)
+- Сколько баллов
+- Время обучения (мин)
+- Недавняя активность (список последних 5 действий)
+- Большая кнопка «Начать уроки корейского языка» ведущая в «Уроки».
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+Экран 2: «Уроки»
+Вверху — переключатели категорий: «Хангыль», «Грамматика», «Слова и выражения», «Пропись».
 
-Changes made via Lovable will be committed automatically to this repo.
+2.1 Хангыль:
+Сделай путь как в Duolingo — «змейкой» из 11 кругов (нумерованные/с иконкой). Круги в белом с фиолетовой обводкой; пройденные — с фиолетовой заливкой и белым номером (но помни: только 3 цвета). Нажатие на круг открывает экран урока.
 
-**Use your preferred IDE**
+Экран урока (видео):
+- Видеоплеер с овальными углами, вокруг фиолетовая рамка.
+- Под видео кнопка «Начать тест».
+Тест: простой квиз из 5 вопросов (MVP) по уроку. После завершения сразу покажи результат строго одним из значений: 0%, 50%, 100% (округляй по правилам: 0–49 => 0%, 50–99 => 50%, 100 => 100). Сохрани результат в Lesson.testScorePercent. Показать экран результата с большим процентом и кнопкой «Назад к урокам».
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+2.2 Грамматика:
+6 уровней (Level 1–6). В каждом уровне ~25 уроков (для MVP можно сгенерировать заглушки). Внутри уровня список уроков карточками; первый элемент — карточка «Начать тест» (уровневый тест), затем уроки. Логика блокировки: уроки открываются последовательно.
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+2.3 Слова и выражения:
+Сделай раздел полностью карточным. Категории: «Приветствия», «Числа (кор.)», «Числа (кит.)», «Семья», «Еда», «Цветы», «Цвета», «Глаголы». Внутри — флип-карточки: лицевая сторона (рус/каз в зависимости от языка), обратная — корейский + транскрипция. Кнопки: «Знаю/Не знаю» (учёт прогресса необязателен для MVP).
 
-Follow these steps:
+2.4 Пропись:
+Список всех букв корейского алфавита (для MVP можно начать с 14 согласных + 10 гласных). При выборе буквы — экран с:
+- Образцом символа
+- Поле для рисования (canvas) чтобы пользователь мог «прописывать».
+- Кнопка «Проверить» (MVP: просто подтверждение и сохранение попытки; расширенно — сравнение штрихов).
+
+Экран 3: «Календарь»
+Месячный календарь (пример: январь). Клик по дате открывает карточку дня:
+- Если есть запись: «2 урока, 30 минут, 50 баллов»
+- Если нет: «В этот день уроки не проводились»
+Данные берутся из CalendarEntry; при прохождении уроков автоматически добавляй/обновляй запись на текущую дату.
+
+Экран 4: «Награды»
+Покажи:
+- Текущий streak (дней подряд)
+- Баллы всего
+- Достижения (список карточек с прогрессом):
+  * «Первый урок пройден»
+  * «Неделю подряд»
+  * «2 недели подряд»
+  * «Месяц подряд»
+  * «1000 дней»
+  * «Мастер Хангыля»
+  * «Выучено N слов» (несколько порогов)
+Карточки: белый фон, фиолетовая рамка, прогресс-бар только чёрный/фиолетовый.
+
+Экран 5: «Справка»
+FAQ карточками:
+- Как начать обучение
+- Как работает календарь
+- Как сохраняется прогресс
+- Поддержка: форма обратной связи (имя, email, сообщение) (для MVP можно без отправки — показать «сообщение отправлено»).
+
+Общие требования:
+- Единый компонент Card с фиолетовой рамкой.
+- Все интерактивные элементы доступны (контраст, фокус-обводка фиолетовая).
+- Сохранение прогресса локально.
+- Seed-данные для уроков/слов, чтобы приложение было наполнено при первом запуске.
+
+Сгенерируй приложение с чистой структурой компонентов, страниц и локальным состоянием, готовое к расширению. Добавь моковые видеоUrl (placeholder) и заглушки уроков/тестов. Дай пользователю возможность пройти 1–2 урока end-to-end (видео -> тест -> результат -> обновление статистики и календаря).
+
+This project was built with [Lovable](https://lovable.dev).
+
+## Build with Lovable
+
+Continue developing this project in the [Lovable editor](https://lovable.dev/projects/295e2744-75e4-4b67-9405-ebe972a0316b).
+
+- **Ship faster**: describe what you want to build and Lovable handles the code.
+- **Stay in sync**: every change made in Lovable is committed straight to this repository.
+- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
+
+## Development
+
+Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
+git clone <this-repository-url>
+cd <repository-name>
 npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
 npm run dev
 ```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
